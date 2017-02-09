@@ -2,11 +2,25 @@ import React from 'react';
 import './CommandBar.css';
 
 export default class CommandBar extends React.Component {
+  onTextChange(eventArgs) {
+    const { onCommandChange } = this.props;
+
+    if (eventArgs.keyCode === 13) { //return
+      onCommandChange(this.refs.commandText.value);
+    }
+  }
   render() {
+    const { commandError } = this.props;
+
     return (
       <div className="commandbar">
-        <span className="input-prefix">&gt;</span>
-        <span><input type="text" /></span>
+        <div>
+          <span className="input-prefix">&gt;</span>
+          <span><input ref="commandText" type="text" onKeyDown={this.onTextChange.bind(this)} /></span>
+        </div>
+        <div className="error-message">
+          {commandError}
+        </div>
       </div>
     );
   }

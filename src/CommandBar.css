@@ -17,3 +17,8 @@
   width: 90%;
   display: border-box;
 }
+
+.commandbar .error-message {
+  color: red;
+  font-weight: bolder;
+}

@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import Cell from './Cell';
 import Row from './Row';
 import CommandBar from './CommandBar';
-import { Row as RowModel, Cell as CellModel, SpreadSheet } from './models';
+import { Row as RowModel,
+  Cell as CellModel,
+  SpreadSheet,
+  parseCommand
+} from './models';
 import './App.css';
 
 const MATRIX_SIZE = 5;
@@ -17,7 +21,8 @@ class App extends Component {
     super();
 
     this.state = {
-      spreadsheet: this.initializeModel()
+      spreadsheet: this.initializeModel(),
+      commandError: null
     };
   }
 
@@ -54,25 +59,42 @@ class App extends Component {
     );
   }
 
-  onValueChange(changedCell, eventArgs) {
+  onCellValueChange(changedCell, eventArgs) {
     let newSpreadSheet = this.state.spreadsheet.clone();
     newSpreadSheet.updateCell(changedCell, eventArgs.target.value);
     this.setState({spreadsheet: newSpreadSheet});
   }
 
+  onCommandChange(newCommand) {
+    try {
+      let ast = parseCommand(newCommand);
+      const { spreadsheet } = this.state;
+      const newSpreadSheet = spreadsheet.clone();
+      newSpreadSheet.eval(ast);
+      this.setState({spreadsheet: newSpreadSheet});
+    }
+    catch(e) {
+      this.setState({commandError: e.message});
+    }
+  }
+
   render() {
-    let spreadsheet = this.state.spreadsheet;
+    const { spreadsheet, commandError } = this.state;
     const self = this;
+
     let rows = [this.renderHeaderRow()].concat(spreadsheet.rows.map(function(row, rowIndex) {
       let cells = row.cells.map(function(cell, cellIndex) {
-        return (<Cell onValueChange={self.onValueChange.bind(self, cell)} value={cell.value} key={cellIndex}></Cell>);
+        return (<Cell onValueChange={self.onCellValueChange.bind(self, cell)} value={cell.value} key={cellIndex}></Cell>);
       });
       return (<Row rowIndex={row.index} key={`row+${rowIndex}`} cells={cells}></Row>);
     }));
 
     return (
       <div className="App">
-        <CommandBar />
+        <CommandBar
+          onCommandChange={this.onCommandChange.bind(this)}
+          commandError={commandError}
+        />
         <div className="spreadsheet">
           {rows}
         </div>

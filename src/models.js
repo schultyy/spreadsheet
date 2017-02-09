@@ -29,8 +29,75 @@ SpreadSheet.prototype.clone = function() {
   return new SpreadSheet(this.rows.map(r => r.clone()));
 };
 
+SpreadSheet.prototype.findRow = function(rowIndex) {
+  return this.rows.find(r => r.index === rowIndex);
+};
+
 SpreadSheet.prototype.updateCell = function(changedCell, newValue) {
-  const row = this.rows.find(r => r.index === changedCell.rowIndex);
+  const row = this.findRow(changedCell.rowIndex);
   const cell = row.findCell(changedCell.index);
   cell.value = parseInt(newValue, 10) || 0;
+};
+
+SpreadSheet.prototype.findCell = function(cellName) {
+  const rowIndex = cellName[0];
+  const cellIndex = parseInt(cellName[1], 10);
+  const row = this.findRow(rowIndex);
+  return row.findCell(cellIndex);
+};
+
+SpreadSheet.prototype.getCellValue = function(cellName) {
+  return this.findCell(cellName).value;
+};
+
+SpreadSheet.prototype.eval = function(ast) {
+  if (ast.type === 'assignment') {
+    const targetCellName = ast.target;
+    const leftCellName = ast.expression.left;
+    const rightCellName = ast.expression.right;
+
+    const leftValue = this.getCellValue(leftCellName);
+    const rightValue = this.getCellValue(rightCellName);
+
+    const targetCell = this.findCell(targetCellName);
+    let newValue;
+    switch(ast.expression.operation) {
+      case '+':
+        newValue = leftValue + rightValue;
+        break;
+      case '-':
+        newValue = leftValue - rightValue;
+        break;
+      case '/':
+        newValue = leftValue / rightValue;
+        break;
+      case '*':
+        newValue = leftValue * rightValue;
+        break;
+      default:
+        throw new Error(`Unknown operation ${ast.expression.operation}`);
+    }
+    this.updateCell(targetCell, newValue);
+  } else {
+    throw new Error(`Unknown AST type ${ast.type}`);
+  }
+};
+
+export function parseCommand(commandString) {
+  //A0 = A1 + A2
+  const tokens = commandString.split(' ');
+
+  if(tokens.length !== 5) {
+    throw new Error(`Invalid syntax. Expected: A0 = A1 + A2, Got: ${commandString}`);
+  }
+
+  return {
+    type: 'assignment',
+    target: tokens[0],
+    expression: {
+      operation: tokens[3],
+      left: tokens[2],
+      right: tokens[4]
+    }
+  };
 };
