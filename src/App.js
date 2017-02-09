@@ -71,7 +71,10 @@ class App extends Component {
       const { spreadsheet } = this.state;
       const newSpreadSheet = spreadsheet.clone();
       newSpreadSheet.eval(ast);
-      this.setState({spreadsheet: newSpreadSheet});
+      this.setState({
+        spreadsheet: newSpreadSheet,
+        commandError: null
+      });
     }
     catch(e) {
       this.setState({commandError: e.message});
