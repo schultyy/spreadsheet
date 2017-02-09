@@ -8,17 +8,20 @@
   display: inline;
   font-size: 10px;
   margin-left: 10px;
-  margin-right: 10px;
+  margin-right: 0px;
   font-weight: bolder;
 }
 
 .commandbar input {
   margin-left: 5px;
+  margin-top: 5px;
   width: 90%;
   display: border-box;
 }
 
 .commandbar .error-message {
   color: red;
+  font-family: Courier New, Courier, monospace;
   font-weight: bolder;
+  margin: 5px;
 }
