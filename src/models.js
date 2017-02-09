@@ -1,5 +1,6 @@
-export function Cell(index, value) {
+export function Cell(index, rowIndex, value) {
   this.index = index;
+  this.rowIndex = rowIndex;
   this.value = value;
 }
 
