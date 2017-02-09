@@ -3,20 +3,32 @@ import './Row.css';
 import Cell from './Cell';
 
 export default class Row extends React.Component {
-  descriptionCell() {
+  descriptionCell(caption) {
     return (
       <Cell
         key={`description-A1`}
         isReadOnly={true}
-        caption="A1"
+        caption={caption}
       >
       </Cell>
     );
   }
 
+  emptyCell() {
+    return (<Cell isReadOnly={true} key={`empty-0`}></Cell>);
+  }
+
   render() {
     const valueCells = this.props.cells;
-    const cells = [this.descriptionCell()].concat(valueCells);
+    const { disableCaption, rowIndex } = this.props;
+
+    let cells = [];
+
+    if (disableCaption) {
+      cells = [this.emptyCell()].concat(valueCells);
+    } else {
+      cells = [this.descriptionCell(rowIndex)].concat(valueCells);
+    }
 
     return (
       <div className="row">

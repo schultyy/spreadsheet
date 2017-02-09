@@ -3,8 +3,9 @@ import './Cell.css';
 
 export default class Cell extends React.Component {
   renderReadOnlyCaption() {
+    let caption = this.props.caption || "";
     return (
-      <span className="readonly">{this.props.caption}</span>
+      <span className="readonly">{caption}</span>
     );
   }
 
