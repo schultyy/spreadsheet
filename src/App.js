@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Cell from './Cell';
 import Row from './Row';
 import CommandBar from './CommandBar';
-import { Row as RowModel, Cell as CellModel } from './models';
+import { Row as RowModel, Cell as CellModel, SpreadSheet } from './models';
 import './App.css';
 
 const MATRIX_SIZE = 5;
@@ -17,7 +17,7 @@ class App extends Component {
     super();
 
     this.state = {
-      rows: this.initializeModel()
+      spreadsheet: this.initializeModel()
     };
   }
 
@@ -34,7 +34,7 @@ class App extends Component {
       }
       rows.push(new RowModel(currentRowIndex, cells));
     }
-    return rows;
+    return new SpreadSheet(rows);
   }
 
   renderHeaderRow() {
@@ -55,17 +55,15 @@ class App extends Component {
   }
 
   onValueChange(changedCell, eventArgs) {
-    let newState = this.state.rows.slice();
-    const row = newState.find(r => r.index === changedCell.rowIndex);
-    const cell = row.cells.find(cell => cell.index === changedCell.index);
-    cell.value = parseInt(eventArgs.target.value, 10) || 0;
-    this.setState({rows: newState});
+    let newSpreadSheet = this.state.spreadsheet.clone();
+    newSpreadSheet.updateCell(changedCell, eventArgs.target.value);
+    this.setState({spreadsheet: newSpreadSheet});
   }
 
   render() {
-    let rowModels = this.state.rows;
+    let spreadsheet = this.state.spreadsheet;
     const self = this;
-    let rows = [this.renderHeaderRow()].concat(rowModels.map(function(row, rowIndex) {
+    let rows = [this.renderHeaderRow()].concat(spreadsheet.rows.map(function(row, rowIndex) {
       let cells = row.cells.map(function(cell, cellIndex) {
         return (<Cell onValueChange={self.onValueChange.bind(self, cell)} value={cell.value} key={cellIndex}></Cell>);
       });
