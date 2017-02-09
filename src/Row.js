@@ -15,7 +15,7 @@ export default class Row extends React.Component {
   }
 
   emptyCell() {
-    return (<Cell isReadOnly={true} key={`empty-0`}></Cell>);
+    return (<Cell isReadOnly={true} key={`empty-0`} caption={""}></Cell>);
   }
 
   render() {
