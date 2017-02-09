@@ -43,11 +43,22 @@ SpreadSheet.prototype.findCell = function(cellName) {
   const rowIndex = cellName[0];
   const cellIndex = parseInt(cellName[1], 10);
   const row = this.findRow(rowIndex);
-  return row.findCell(cellIndex);
+  if(typeof row === 'undefined' || row === null) {
+    throw new Error(`Could not find Row ${rowIndex}`);
+  }
+  const cell = row.findCell(cellIndex);
+  if(typeof cell === 'undefined' || cell === null) {
+    throw new Error(`Could not find Cell ${cellName}`);
+  }
+  return cell;
 };
 
 SpreadSheet.prototype.getCellValue = function(cellName) {
-  return this.findCell(cellName).value;
+  const cell = this.findCell(cellName);
+  if(typeof cell === 'undefined' || cell === null) {
+    throw new Error(`Invalid Cell Identifier ${cellName}`);
+  }
+  return cell.value;
 };
 
 SpreadSheet.prototype.eval = function(ast) {
