@@ -9,18 +9,18 @@ export default class Cell extends React.Component {
     );
   }
 
-  renderInputField() {
-    return (<input />);
+  renderInputField(onValueChange, value) {
+    return (<input onChange={onValueChange} value={value} />);
   }
 
   render() {
-    const { isReadOnly } = this.props;
+    const { isReadOnly, onValueChange, value } = this.props;
 
     const cellClasses = isReadOnly ? "cell" : "cell";
 
     return (
       <div className={cellClasses}>
-        {isReadOnly ? this.renderReadOnlyCaption() : this.renderInputField()}
+        {isReadOnly ? this.renderReadOnlyCaption() : this.renderInputField(onValueChange, value)}
       </div>
     );
   }
