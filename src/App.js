@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Cell from './Cell';
 import Row from './Row';
+import CommandBar from './CommandBar';
 import { Row as RowModel, Cell as CellModel } from './models';
 import './App.css';
 
@@ -73,7 +74,10 @@ class App extends Component {
 
     return (
       <div className="App">
-        {rows}
+        <CommandBar />
+        <div className="spreadsheet">
+          {rows}
+        </div>
       </div>
     );
   }

@@ -1,0 +1,19 @@
+.commandbar {
+  margin-top: 50px;
+  width: 100%;
+  border: 1px solid dimgray;
+}
+
+.commandbar .input-prefix {
+  display: inline;
+  font-size: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-weight: bolder;
+}
+
+.commandbar input {
+  margin-left: 5px;
+  width: 90%;
+  display: border-box;
+}
