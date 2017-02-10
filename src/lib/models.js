@@ -4,6 +4,10 @@ export function Cell(index, rowIndex, value) {
   this.value = value;
 }
 
+Cell.prototype.id = function() {
+  return `${this.rowIndex}${this.index}`;
+};
+
 Cell.prototype.clone = function() {
   return new Cell(this.index, this.rowIndex, this.value);
 };
