@@ -40,9 +40,23 @@ SpreadSheet.prototype.getCellValue = function(cellName) {
   return cell.value;
 };
 
+SpreadSheet.prototype.updatedComputedCells = function() {
+  this.rows.forEach((row) => {
+    row.cells.forEach((cell) => {
+      if(!cell.formula) {
+        return;
+      }
+
+      const ast = parseCommand(cell.formula);
+      this.walkAST(ast);
+    });
+  });
+};
+
 SpreadSheet.prototype.eval = function(command) {
   const ast = parseCommand(command);
   this.walkAST(ast);
+  this.updatedComputedCells();
   return this;
 };
 
