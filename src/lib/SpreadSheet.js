@@ -40,9 +40,8 @@ SpreadSheet.prototype.getCellValue = function(cellName) {
 
 SpreadSheet.prototype.eval = function(command) {
   const ast = parseCommand(command);
-  const newSelf = this.clone();
-  newSelf.walkAST(ast);
-  return newSelf;
+  this.walkAST(ast);
+  return this;
 };
 
 SpreadSheet.prototype.walkAST = function(ast) {

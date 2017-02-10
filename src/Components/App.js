@@ -66,8 +66,11 @@ class App extends Component {
   onCommandChange(newCommand) {
     try {
       const { spreadsheet } = this.state;
+      const newSheet = spreadsheet.clone();
+
+      newSheet.eval(newCommand);
       this.setState({
-        spreadsheet: spreadsheet.eval(newCommand),
+        spreadsheet: newSheet,
         commandError: null
       });
     }
