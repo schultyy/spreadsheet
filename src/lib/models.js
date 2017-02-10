@@ -8,6 +8,17 @@ Cell.prototype.clone = function() {
   return new Cell(this.index, this.rowIndex, this.value);
 };
 
+export function ComputedCell(index, rowIndex, formula) {
+  this.index = index;
+  this.rowIndex = rowIndex;
+  this.value = 0;
+  this.formula = formula;
+}
+
+ComputedCell.prototype.clone = function() {
+  return new ComputedCell(this.index, this.rowIndex, this.formula);
+};
+
 export function Row(index, cells) {
   this.index = index;
   this.cells = cells;
