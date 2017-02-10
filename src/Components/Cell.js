@@ -45,10 +45,20 @@ class CellContent extends React.Component {
     }
   }
 
+  onInputBlur(event) {
+    this.setState({ isActive: false });
+  }
+
   renderInputField(value) {
     const { onValueChange } = this.props;
 
-    return (<input value={value} onKeyDown={this.onInputKeyDown.bind(this)} onChange={onValueChange} />);
+    return (
+      <input autoFocus value={value}
+             onBlur={this.onInputBlur.bind(this)}
+             onKeyDown={this.onInputKeyDown.bind(this)}
+             onChange={onValueChange}
+      />
+    );
   }
 
   render() {
