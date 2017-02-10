@@ -10,18 +10,18 @@ export default class Cell extends React.Component {
     );
   }
 
-  renderInputField(onValueChange, onAddFormula, value) {
-    return (<CellContent onAddFormula={onAddFormula} onValueChange={onValueChange} value={value}></CellContent>);
+  renderInputField(onValueChange, onAddFormula, hasFormula, value) {
+    return (<CellContent onAddFormula={onAddFormula} onValueChange={onValueChange} hasFormula={hasFormula} value={value}></CellContent>);
   }
 
   render() {
-    const { isReadOnly, onValueChange, onAddFormula, value } = this.props;
+    const { isReadOnly, onValueChange, onAddFormula, hasFormula, value } = this.props;
 
     const cellClasses = isReadOnly ? "cell" : "cell";
 
     return (
       <div className={cellClasses}>
-        {isReadOnly ? this.renderReadOnlyCaption() : this.renderInputField(onValueChange, onAddFormula, value)}
+        {isReadOnly ? this.renderReadOnlyCaption() : this.renderInputField(onValueChange, onAddFormula, hasFormula, value)}
       </div>
     );
   }
@@ -38,7 +38,10 @@ class CellContent extends React.Component {
   }
 
   onMouseDoubleClick(event) {
-    this.setState({ isActive: true });
+    const { hasFormula } = this.props;
+    if(!hasFormula) {
+      this.setState({ isActive: true });
+    }
   }
 
   onInputKeyDown(event) {
@@ -70,15 +73,17 @@ class CellContent extends React.Component {
   }
 
   render() {
-    const { value, onAddFormula } = this.props;
+    const { value, onAddFormula, hasFormula } = this.props;
     const { isActive, hasFocus } = this.state;
 
+    const classNames = hasFormula ? "readonly" : "";
+
     return (
-      <div onClick={this.onGainFocus.bind(this)} onDoubleClick={this.onMouseDoubleClick.bind(this)}>
+      <div className={classNames} onClick={this.onGainFocus.bind(this)} onDoubleClick={this.onMouseDoubleClick.bind(this)}>
         { isActive ?
           this.renderInputField(value) :
           value }
-        { hasFocus ? <ContextMenu onAddFormula={onAddFormula}></ContextMenu> : null }
+        { hasFocus && !hasFormula ? <ContextMenu onAddFormula={onAddFormula}></ContextMenu> : null }
       </div>
     );
   }

@@ -86,12 +86,32 @@ class App extends Component {
     });
   }
 
+  onModalAddFormulaFinish(formula) {
+    const { spreadsheet } = this.state;
+
+    spreadsheet.addFormulaToCell(formula);
+
+    this.setState({
+      isFormulaCommandBarVisible: false
+    });
+  }
+
   render() {
     const { spreadsheet, commandError, isFormulaCommandBarVisible } = this.state;
     const self = this;
 
     let rows = [this.renderHeaderRow()].concat(spreadsheet.rows.map(function(row, rowIndex) {
       let cells = row.cells.map(function(cell, cellIndex) {
+        const hasFormula = !!cell.formula;
+        if(hasFormula) {
+          return (
+            <Cell onValueChange={self.onCellValueChange.bind(self, cell)}
+                value={cell.value}
+                hasFormula={true}
+                key={cellIndex}>
+            </Cell>
+          );
+        }
         return (
           <Cell onValueChange={self.onCellValueChange.bind(self, cell)}
                 value={cell.value}
@@ -113,6 +133,7 @@ class App extends Component {
         <div className="spreadsheet">
           { isFormulaCommandBarVisible ?
             <CommandBar
+              onCommandChange={this.onModalAddFormulaFinish.bind(this)}
               modal={true}
             /> : null }
           {rows}
