@@ -27,7 +27,8 @@ describe('parseCommand', () => {
       }).toThrow();
     });
   });
-  describe('with whitespace separated', () => {
+
+  describe('equation assignment with whitespace separated', () => {
     const ast = parseCommand('A0 = A1 + A2');
 
     it('parses simple assignment', () => {
@@ -57,7 +58,7 @@ describe('parseCommand', () => {
     });
   });
 
-  describe('without separating whitespace', () => {
+  describe('equation assignment without separating whitespace', () => {
     const ast = parseCommand('A0=A1+A2');
 
     it('parses simple assignment', () => {
