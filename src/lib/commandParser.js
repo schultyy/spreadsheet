@@ -44,6 +44,7 @@ function equation(operatorIndex, expression) {
   assertRequiredNotNull(right, 'Right Operand');
 
   return {
+    type: 'equation',
     operation: operator,
     left: left,
     right: right

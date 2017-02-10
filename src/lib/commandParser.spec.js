@@ -39,6 +39,10 @@ describe('parseCommand', () => {
     describe('expression', () => {
       let expression = ast.expression;
 
+      it('has type equation', () => {
+        expect(expression.type).toEqual('equation');
+      });
+
       it('has correct operation', () => {
         expect(expression.operation).toEqual('+');
       });

@@ -49,32 +49,49 @@ SpreadSheet.prototype.eval = function(command) {
 SpreadSheet.prototype.walkAST = function(ast) {
   if (ast.type === 'assignment') {
     const targetCellName = ast.target;
-    const leftCellName = ast.expression.left;
-    const rightCellName = ast.expression.right;
-
-    const leftValue = this.getCellValue(leftCellName);
-    const rightValue = this.getCellValue(rightCellName);
-
     const targetCell = this.findCell(targetCellName);
-    let newValue;
-    switch(ast.expression.operation) {
-      case '+':
-        newValue = leftValue + rightValue;
+    let newValue = null;
+
+    switch(ast.expression.type) {
+      case 'value':
+        newValue = ast.expression.value;
         break;
-      case '-':
-        newValue = leftValue - rightValue;
-        break;
-      case '/':
-        newValue = leftValue / rightValue;
-        break;
-      case '*':
-        newValue = leftValue * rightValue;
+      case 'equation':
+        newValue = this.walkEquation(ast);
         break;
       default:
-        throw new Error(`Unknown operation ${ast.expression.operation}`);
+        throw new Error(`Invalid expression type ${ast.expression.type}`);
     }
     this.updateCell(targetCell, newValue);
   } else {
     throw new Error(`Unknown AST type ${ast.type}`);
   }
+};
+
+SpreadSheet.prototype.walkEquation = function(ast) {
+  const leftCellName = ast.expression.left;
+  const rightCellName = ast.expression.right;
+
+  const leftValue = this.getCellValue(leftCellName);
+  const rightValue = this.getCellValue(rightCellName);
+
+
+  let newValue;
+  switch(ast.expression.operation) {
+    case '+':
+      newValue = leftValue + rightValue;
+      break;
+    case '-':
+      newValue = leftValue - rightValue;
+      break;
+    case '/':
+      newValue = leftValue / rightValue;
+      break;
+    case '*':
+      newValue = leftValue * rightValue;
+      break;
+    default:
+      throw new Error(`Unknown operation ${ast.expression.operation}`);
+  }
+  return newValue;
 };

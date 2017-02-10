@@ -13,11 +13,17 @@ describe('SpreadSheet', () => {
     ];
 
     const spreadSheet = new SpreadSheet(rows);
-    const command = 'A0 = A1 + A2';
 
-    it('evals a valid AST', () => {
-      const newSheet = spreadSheet.eval(command);
-      expect(newSheet.rows[0].cells[0].value).toEqual(15);
+    describe('assignment', () => {
+      it('evals an addition formula', () => {
+        spreadSheet.eval('A0 = A1 + A2');
+        expect(spreadSheet.rows[0].cells[0].value).toEqual(15);
+      });
+
+      it('evals a value assignment', () => {
+        spreadSheet.eval('A0 = 2342');
+        expect(spreadSheet.rows[0].cells[0].value).toEqual(2342);
+      });
     });
 
     it('raises exception if command is malformed', () => {
