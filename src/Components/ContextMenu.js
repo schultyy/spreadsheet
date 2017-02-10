@@ -13,13 +13,21 @@ export default class ContextMenu extends React.Component {
   renderMenuEntries() {
     return (
       <ul>
-        <li>Add Formula</li>
+        <li onClick={this.onMenuEntryClick.bind(this)}>Add Formula</li>
       </ul>
     );
   }
 
-  onMenuClick() {
+  onMenuEntryClick() {
+    this.setState({
+      expanded: false
+    });
+  }
 
+  onMenuClick() {
+    this.setState({
+      expanded: !this.state.expanded
+    });
   }
 
   render() {
