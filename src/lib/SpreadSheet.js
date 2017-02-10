@@ -1,4 +1,5 @@
 import { parseCommand } from './commandParser';
+import { ComputedCell } from './models';
 
 export function SpreadSheet(rows) {
   this.rows = rows;
@@ -19,8 +20,7 @@ SpreadSheet.prototype.updateCell = function(changedCell, newValue) {
 };
 
 SpreadSheet.prototype.findCell = function(cellName) {
-  const rowIndex = cellName[0];
-  const cellIndex = parseInt(cellName[1], 10);
+  const { rowIndex, cellIndex } = parseCellName(cellName);
   const row = this.findRow(rowIndex);
   if(typeof row === 'undefined' || row === null) {
     throw new Error(`Could not find Row ${rowIndex}`);
@@ -109,3 +109,19 @@ SpreadSheet.prototype.walkEquation = function(ast) {
   }
   return newValue;
 };
+
+SpreadSheet.prototype.addFormulaToCell = function(formula) {
+  const ast = parseCommand(formula);
+  const { rowIndex, cellIndex } = parseCellName(ast.target);
+  const row = this.findRow(rowIndex);
+  row.replaceCell(cellIndex, new ComputedCell(cellIndex, rowIndex, formula));
+};
+
+function parseCellName(cellName) {
+  const rowIndex = cellName[0];
+  const cellIndex = parseInt(cellName.substring(1), 10);
+  return {
+    rowIndex: rowIndex,
+    cellIndex: cellIndex
+  };
+}

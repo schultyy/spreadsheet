@@ -35,3 +35,12 @@ Row.prototype.clone = function() {
 Row.prototype.findCell = function(cellIndex) {
   return this.cells.find(cell => cell.index === cellIndex);
 };
+
+Row.prototype.replaceCell = function(cellIndex, newCell) {
+  for(let i = 0; i < this.cells.length; i++) {
+    if(this.cells[i].index === cellIndex) {
+      this.cells[i] = newCell;
+      break;
+    }
+  }
+};

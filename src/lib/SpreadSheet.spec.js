@@ -2,6 +2,24 @@ import { SpreadSheet } from './SpreadSheet';
 import { Row, Cell, ComputedCell } from './models';
 
 describe('SpreadSheet', () => {
+  describe('addFormulaToCell', () => {
+    const cells = [
+        new Cell(0, 'A', 0),
+        new Cell(1, 'A', 5),
+        new Cell(2, 'A', 10)
+      ];
+    const rows = [
+      new Row('A', cells)
+    ];
+    const spreadSheet = new SpreadSheet(rows);
+    const formula = 'A0 = A1 + A2';
+
+    it('converts the specified cell to a computed cell', () => {
+      spreadSheet.addFormulaToCell(formula);
+      const cell = spreadSheet.rows[0].cells[0];
+      expect(cell.constructor).toEqual(ComputedCell);
+    });
+  });
   describe('eval', () => {
     context('with computed cells', () => {
       const cells = [
