@@ -115,6 +115,7 @@ SpreadSheet.prototype.addFormulaToCell = function(formula) {
   const { rowIndex, cellIndex } = parseCellName(ast.target);
   const row = this.findRow(rowIndex);
   row.replaceCell(cellIndex, new ComputedCell(cellIndex, rowIndex, formula));
+  this.updatedComputedCells();
 };
 
 function parseCellName(cellName) {

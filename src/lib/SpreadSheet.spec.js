@@ -19,6 +19,12 @@ describe('SpreadSheet', () => {
       const cell = spreadSheet.rows[0].cells[0];
       expect(cell.constructor).toEqual(ComputedCell);
     });
+
+    it('evaluates formula directly', () => {
+      spreadSheet.addFormulaToCell(formula);
+      const cell = spreadSheet.rows[0].cells[0];
+      expect(cell.value).toEqual(15);
+    });
   });
   describe('eval', () => {
     context('with computed cells', () => {
