@@ -9,6 +9,10 @@
   position: relative;
 }
 
+.cell .content {
+  overflow: hidden;
+}
+
 .cell .readonly {
   background-color: gray;
   width: 100%;
