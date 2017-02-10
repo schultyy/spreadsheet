@@ -3,8 +3,7 @@ import Cell from './Cell';
 import Row from './Row';
 import CommandBar from './CommandBar';
 import { Row as RowModel,
-  Cell as CellModel,
-  parseCommand
+  Cell as CellModel
 } from '../lib/models';
 import { SpreadSheet } from '../lib/SpreadSheet';
 import './App.css';
@@ -16,7 +15,6 @@ function nextChar(c, offset) {
 }
 
 class App extends Component {
-
   constructor() {
     super();
 
@@ -67,10 +65,9 @@ class App extends Component {
 
   onCommandChange(newCommand) {
     try {
-      let ast = parseCommand(newCommand);
       const { spreadsheet } = this.state;
       const newSpreadSheet = spreadsheet.clone();
-      newSpreadSheet.eval(ast);
+      newSpreadSheet.eval(newCommand);
       this.setState({
         spreadsheet: newSpreadSheet,
         commandError: null
