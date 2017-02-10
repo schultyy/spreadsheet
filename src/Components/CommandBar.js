@@ -10,10 +10,12 @@ export default class CommandBar extends React.Component {
     }
   }
   render() {
-    const { commandError } = this.props;
+    const { commandError, modal } = this.props;
+
+    const classNames = modal ? "commandbar modal" : "commandbar inline";
 
     return (
-      <div className="commandbar">
+      <div className={classNames}>
         <div>
           <span className="input-prefix">&gt;</span>
           <span><input ref="commandText" type="text" onKeyDown={this.onTextChange.bind(this)} /></span>

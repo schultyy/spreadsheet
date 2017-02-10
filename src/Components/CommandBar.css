@@ -1,7 +1,21 @@
 .commandbar {
+  border: 1px solid dimgray;
+}
+
+.inline {
   margin-top: 50px;
   width: 100%;
-  border: 1px solid dimgray;
+}
+
+.modal {
+  background-color: gray;
+  color: white;
+  position: absolute;
+  left: 25px;
+  top: 125px;
+  width: 400px;
+  z-index: 99;
+  border: 1px solid black;
 }
 
 .commandbar .input-prefix {

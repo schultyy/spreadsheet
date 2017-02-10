@@ -19,9 +19,11 @@ export default class ContextMenu extends React.Component {
   }
 
   onMenuEntryClick() {
+    const { onAddFormula } = this.props;
     this.setState({
       expanded: false
     });
+    onAddFormula();
   }
 
   onMenuClick() {

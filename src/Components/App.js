@@ -20,7 +20,8 @@ class App extends Component {
 
     this.state = {
       spreadsheet: this.initializeModel(),
-      commandError: null
+      commandError: null,
+      isFormulaCommandBarVisible: false
     };
   }
 
@@ -79,13 +80,25 @@ class App extends Component {
     }
   }
 
+  onAddFormula() {
+    this.setState({
+      isFormulaCommandBarVisible: true
+    });
+  }
+
   render() {
-    const { spreadsheet, commandError } = this.state;
+    const { spreadsheet, commandError, isFormulaCommandBarVisible } = this.state;
     const self = this;
 
     let rows = [this.renderHeaderRow()].concat(spreadsheet.rows.map(function(row, rowIndex) {
       let cells = row.cells.map(function(cell, cellIndex) {
-        return (<Cell onValueChange={self.onCellValueChange.bind(self, cell)} value={cell.value} key={cellIndex}></Cell>);
+        return (
+          <Cell onValueChange={self.onCellValueChange.bind(self, cell)}
+                value={cell.value}
+                onAddFormula={self.onAddFormula.bind(self)}
+                key={cellIndex}>
+          </Cell>
+        );
       });
       return (<Row rowIndex={row.index} key={`row+${rowIndex}`} cells={cells}></Row>);
     }));
@@ -95,8 +108,13 @@ class App extends Component {
         <CommandBar
           onCommandChange={this.onCommandChange.bind(this)}
           commandError={commandError}
+          modal={false}
         />
         <div className="spreadsheet">
+          { isFormulaCommandBarVisible ?
+            <CommandBar
+              modal={true}
+            /> : null }
           {rows}
         </div>
       </div>

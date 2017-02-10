@@ -10,18 +10,18 @@ export default class Cell extends React.Component {
     );
   }
 
-  renderInputField(onValueChange, value) {
-    return (<CellContent onValueChange={onValueChange} value={value}></CellContent>);
+  renderInputField(onValueChange, onAddFormula, value) {
+    return (<CellContent onAddFormula={onAddFormula} onValueChange={onValueChange} value={value}></CellContent>);
   }
 
   render() {
-    const { isReadOnly, onValueChange, value } = this.props;
+    const { isReadOnly, onValueChange, onAddFormula, value } = this.props;
 
     const cellClasses = isReadOnly ? "cell" : "cell";
 
     return (
       <div className={cellClasses}>
-        {isReadOnly ? this.renderReadOnlyCaption() : this.renderInputField(onValueChange, value)}
+        {isReadOnly ? this.renderReadOnlyCaption() : this.renderInputField(onValueChange, onAddFormula, value)}
       </div>
     );
   }
@@ -70,7 +70,7 @@ class CellContent extends React.Component {
   }
 
   render() {
-    const { value } = this.props;
+    const { value, onAddFormula } = this.props;
     const { isActive, hasFocus } = this.state;
 
     return (
@@ -78,7 +78,7 @@ class CellContent extends React.Component {
         { isActive ?
           this.renderInputField(value) :
           value }
-        { hasFocus ? <ContextMenu></ContextMenu> : null }
+        { hasFocus ? <ContextMenu onAddFormula={onAddFormula}></ContextMenu> : null }
       </div>
     );
   }
