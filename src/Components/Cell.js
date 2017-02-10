@@ -1,5 +1,6 @@
 import React from 'react';
 import './Cell.css';
+import ContextMenu from './ContextMenu';
 
 export default class Cell extends React.Component {
   renderReadOnlyCaption() {
@@ -31,7 +32,8 @@ class CellContent extends React.Component {
     super();
 
     this.state = {
-      isActive: false
+      isActive: false,
+      hasFocus: false
     };
   }
 
@@ -41,12 +43,12 @@ class CellContent extends React.Component {
 
   onInputKeyDown(event) {
     if(event.keyCode === 13) {
-      this.setState({ isActive: false });
+      this.setState({ isActive: false, hasFocus: false });
     }
   }
 
   onInputBlur(event) {
-    this.setState({ isActive: false });
+    this.setState({ isActive: false, hasFocus: false });
   }
 
   renderInputField(value) {
@@ -61,15 +63,22 @@ class CellContent extends React.Component {
     );
   }
 
+  onGainFocus() {
+    this.setState({
+      hasFocus: true
+    });
+  }
+
   render() {
     const { value } = this.props;
-    const { isActive } = this.state;
+    const { isActive, hasFocus } = this.state;
 
     return (
-      <div onDoubleClick={this.onMouseDoubleClick.bind(this)}>
+      <div onClick={this.onGainFocus.bind(this)} onDoubleClick={this.onMouseDoubleClick.bind(this)}>
         { isActive ?
           this.renderInputField(value) :
           value }
+        { hasFocus ? <ContextMenu></ContextMenu> : null }
       </div>
     );
   }
