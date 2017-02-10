@@ -16,8 +16,13 @@ describe('SpreadSheet', () => {
     const command = 'A0 = A1 + A2';
 
     it('evals a valid AST', () => {
+      const newSheet = spreadSheet.eval(command);
+      expect(newSheet.rows[0].cells[0].value).toEqual(15);
+    });
+
+    it('does not modify the original spreadsheet', () => {
       spreadSheet.eval(command);
-      expect(spreadSheet.rows[0].cells[0].value).toEqual(15);
+      expect(spreadSheet.rows[0].cells[0].value).toEqual(0);
     });
   });
 });
