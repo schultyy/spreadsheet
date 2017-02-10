@@ -4,9 +4,9 @@ import Row from './Row';
 import CommandBar from './CommandBar';
 import { Row as RowModel,
   Cell as CellModel,
-  SpreadSheet,
   parseCommand
 } from '../lib/models';
+import { SpreadSheet } from '../lib/SpreadSheet';
 import './App.css';
 
 const MATRIX_SIZE = 5;
