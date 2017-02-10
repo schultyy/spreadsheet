@@ -6,7 +6,7 @@ import { Row as RowModel,
   Cell as CellModel,
   SpreadSheet,
   parseCommand
-} from './models';
+} from '../models';
 import './App.css';
 
 const MATRIX_SIZE = 5;
