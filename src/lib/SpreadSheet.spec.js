@@ -24,6 +24,12 @@ describe('SpreadSheet', () => {
       spreadSheet.eval(command);
       expect(spreadSheet.rows[0].cells[0].value).toEqual(0);
     });
+
+    it('raises exception if command is malformed', () => {
+      expect(() => {
+        spreadSheet.eval('gibberish');
+      }).toThrow();
+    });
   });
 });
 
