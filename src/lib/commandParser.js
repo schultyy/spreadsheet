@@ -13,14 +13,14 @@ export function parseCommand(commandString) {
   const operatorIndex = getOperatorIndex(expression);
   var expressionAST = null;
 
-  if (operatorIndex !== -1 && !isNumber(expression)) {
+  if (operatorIndex !== -1 && !isValue(expression)) {
     //Looks like we encountered an equation
     expressionAST = equation(operatorIndex, expression);
-  } else if (operatorIndex === -1 && isNumber(expression)) {
+  } else if (operatorIndex === -1 && isValue(expression)) {
     //Looks like we encountered a simple value
     expressionAST = {
       type: 'value',
-      value: parseInt(expression, 10)
+      value: castValue(expression)
     };
   }
   else {
@@ -49,6 +49,17 @@ function equation(operatorIndex, expression) {
     left: left,
     right: right
   };
+}
+
+function castValue(value) {
+  if(isNumber(value)) {
+    return parseInt(value, 10);
+  }
+  return value.toString();
+}
+
+function isValue(potentialValue) {
+  return getOperatorIndex(potentialValue) === -1;
 }
 
 function isNumber(potentialNumber) {

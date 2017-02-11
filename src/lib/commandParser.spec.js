@@ -2,7 +2,7 @@ import { parseCommand } from './commandParser';
 
 describe('parseCommand', () => {
   describe('simple value assignment', () => {
-    context('with valid value', () => {
+    context('with a number', () => {
       const ast = parseCommand('A0 = 5');
 
       describe('ast', () => {
@@ -21,10 +21,24 @@ describe('parseCommand', () => {
         });
       });
     });
-    it ('raises error when value is invalid', () => {
-      expect(() => {
-        parseCommand('A0 = BFS');
-      }).toThrow();
+    context('with a string', () => {
+      const ast = parseCommand('A0 = Field description');
+
+      describe('ast', () => {
+        it('has type assignment', () => {
+          expect(ast.type).toEqual('assignment');
+        });
+
+        describe('expression', () => {
+          it('has type value', () => {
+            expect(ast.expression.type).toEqual('value');
+          });
+
+          it('has correct value', () => {
+            expect(ast.expression.value).toEqual('Field description');
+          });
+        });
+      });
     });
   });
 
