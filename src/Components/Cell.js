@@ -82,7 +82,7 @@ class CellContent extends React.Component {
       <div className={classNames} onClick={this.onGainFocus.bind(this)} onDoubleClick={this.onMouseDoubleClick.bind(this)}>
         { isActive ?
           this.renderInputField(value) :
-          <div className="content">{value}</div>
+          <span className="content">{value}</span>
         }
         { hasFocus && !hasFormula ? <ContextMenu onAddFormula={onAddFormula}></ContextMenu> : null }
       </div>
