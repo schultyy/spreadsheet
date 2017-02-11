@@ -8,7 +8,7 @@ import { Row as RowModel,
 import { SpreadSheet } from '../lib/SpreadSheet';
 import './App.css';
 
-const MATRIX_SIZE = 5;
+const MATRIX_SIZE = 10;
 
 function nextChar(c, offset) {
   return String.fromCharCode(c.charCodeAt(0) + offset);
