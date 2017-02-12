@@ -97,6 +97,12 @@ class App extends Component {
     });
   }
 
+  onSpreadSheetNameChange(newName) {
+    const spreadSheet = this.state.spreadsheet.clone();
+    spreadSheet.setFilename(newName);
+    this.setState({ spreadsheet: spreadSheet });
+  }
+
   render() {
     const { spreadsheet, commandError, isFormulaCommandBarVisible } = this.state;
     const self = this;
@@ -128,7 +134,7 @@ class App extends Component {
       <div className="App">
         <div className="header">
           <h1>Spreadsheets</h1>
-          <Options />
+          <Options onFilenameChange={this.onSpreadSheetNameChange.bind(this)} />
           <CommandBar
             onCommandChange={this.onCommandChange.bind(this)}
             commandError={commandError}
