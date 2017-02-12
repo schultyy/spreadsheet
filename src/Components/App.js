@@ -11,7 +11,7 @@ class App extends Component {
     super();
 
     this.state = {
-      spreadsheet: SpreadSheet.initializeModel(),
+      spreadsheet: new SpreadSheet(),
       commandError: null,
       isFormulaCommandBarVisible: false
     };
