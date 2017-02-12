@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Cell from './Cell';
 import Row from './Row';
 import CommandBar from './CommandBar';
+import Options from './Options';
 import { Row as RowModel,
   Cell as CellModel
 } from '../lib/models';
@@ -125,6 +126,7 @@ class App extends Component {
 
     return (
       <div className="App">
+        <Options />
         <CommandBar
           onCommandChange={this.onCommandChange.bind(this)}
           commandError={commandError}
