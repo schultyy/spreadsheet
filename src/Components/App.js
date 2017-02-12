@@ -126,12 +126,14 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Options />
-        <CommandBar
-          onCommandChange={this.onCommandChange.bind(this)}
-          commandError={commandError}
-          modal={false}
-        />
+        <div className="header">
+          <Options />
+          <CommandBar
+            onCommandChange={this.onCommandChange.bind(this)}
+            commandError={commandError}
+            modal={false}
+          />
+        </div>
         <div className="spreadsheet">
           { isFormulaCommandBarVisible ?
             <CommandBar
