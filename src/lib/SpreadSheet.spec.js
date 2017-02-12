@@ -2,6 +2,26 @@ import { SpreadSheet } from './SpreadSheet';
 import { Row, Cell, ComputedCell } from './models';
 
 describe('SpreadSheet', () => {
+  describe('setFilename', () => {
+    const spreadSheet = new SpreadSheet([]);
+
+    it('assigns a new filename', () => {
+      spreadSheet.setFilename('abc');
+      expect(spreadSheet.filename).toEqual('abc');
+    });
+
+    it('refuses to set filename when new value is null', () => {
+      expect(() => {
+        spreadSheet.setFilename(null);
+      }).toThrow();
+    });
+
+    it('refuses to set filename when new value is undefined', () => {
+      expect(() => {
+        spreadSheet.setFilename(undefined);
+      }).toThrow();
+    });
+  });
   describe('addFormulaToCell', () => {
     const cells = [
         new Cell(0, 'A', 0),

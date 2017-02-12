@@ -3,10 +3,20 @@ import { ComputedCell } from './models';
 
 export function SpreadSheet(rows) {
   this.rows = rows;
+  this.filename = 'new Spreadsheet';
 }
 
 SpreadSheet.prototype.clone = function() {
-  return new SpreadSheet(this.rows.map(r => r.clone()));
+  const newSheet = new SpreadSheet(this.rows.map(r => r.clone()));
+  newSheet.filename = this.filename;
+  return newSheet;
+};
+
+SpreadSheet.prototype.setFilename = function(newFilename) {
+  if (typeof newFilename === 'undefined' || newFilename === null) {
+    throw new Error('Spreadsheet filename cannot be null or undefined');
+  }
+  this.filename = newFilename;
 };
 
 SpreadSheet.prototype.findRow = function(rowIndex) {
