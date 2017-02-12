@@ -3,8 +3,10 @@
   cursor: pointer;
   font-size: 25px;
   color: green;
+  font-weight: bolder;
+  z-index: 2;
   position: absolute;
-  top: 5px;
+  top: 15px;
   right: -10px;
 }
 
