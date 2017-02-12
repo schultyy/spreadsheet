@@ -11,8 +11,8 @@ describe('parseCommand', () => {
         });
 
         describe('expression', () => {
-          it('has type "value"', () => {
-            expect(ast.expression.type).toEqual('value');
+          it('has type "number"', () => {
+            expect(ast.expression.type).toEqual('number');
           });
 
           it('has correct value', () => {
@@ -30,8 +30,8 @@ describe('parseCommand', () => {
         });
 
         describe('expression', () => {
-          it('has type value', () => {
-            expect(ast.expression.type).toEqual('value');
+          it('has type "string"', () => {
+            expect(ast.expression.type).toEqual('string');
           });
 
           it('has correct value', () => {

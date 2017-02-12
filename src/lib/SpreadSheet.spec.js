@@ -80,6 +80,33 @@ describe('SpreadSheet', () => {
         });
       });
     });
+
+    context('with cells containing strings', () => {
+      const cells = [
+        new Cell(0, 'A', 54),
+        new Cell(1, 'A', "This is not a number"),
+        new Cell(2, 'A', 10)
+      ];
+      const rows = [
+        new Row('A', cells)
+      ];
+      const spreadSheet = new SpreadSheet(rows);
+
+      describe('in an equation', () => {
+        spreadSheet.eval('A0 = A1 + A2');
+        it('the target cell has value 0', () => {
+          expect(spreadSheet.rows[0].cells[0].value).toEqual(10);
+        });
+      });
+
+      describe('a simple value assignment', () => {
+        it('assigns the value to the target cell', () => {
+          spreadSheet.eval('A0 = Also not a number');
+
+          expect(spreadSheet.rows[0].cells[0].value).toEqual('Also not a number');
+        });
+      });
+    });
   });
 });
 

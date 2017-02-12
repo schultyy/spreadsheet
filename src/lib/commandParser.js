@@ -19,7 +19,7 @@ export function parseCommand(commandString) {
   } else if (operatorIndex === -1 && isValue(expression)) {
     //Looks like we encountered a simple value
     expressionAST = {
-      type: 'value',
+      type: isNumber(expression) ? 'number' : 'string',
       value: castValue(expression)
     };
   }

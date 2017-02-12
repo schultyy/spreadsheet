@@ -16,7 +16,7 @@ SpreadSheet.prototype.findRow = function(rowIndex) {
 SpreadSheet.prototype.updateCell = function(changedCell, newValue) {
   const row = this.findRow(changedCell.rowIndex);
   const cell = row.findCell(changedCell.index);
-  cell.value = parseInt(newValue, 10) || 0;
+  cell.value = newValue;
 };
 
 SpreadSheet.prototype.findCell = function(cellName) {
@@ -67,7 +67,8 @@ SpreadSheet.prototype.walkAST = function(ast) {
     let newValue = null;
 
     switch(ast.expression.type) {
-      case 'value':
+      case 'string':
+      case 'number':
         newValue = ast.expression.value;
         break;
       case 'equation':
@@ -86,9 +87,8 @@ SpreadSheet.prototype.walkEquation = function(ast) {
   const leftCellName = ast.expression.left;
   const rightCellName = ast.expression.right;
 
-  const leftValue = this.getCellValue(leftCellName);
-  const rightValue = this.getCellValue(rightCellName);
-
+  const leftValue = coerceCellValue(this.getCellValue(leftCellName));
+  const rightValue = coerceCellValue(this.getCellValue(rightCellName));
 
   let newValue;
   switch(ast.expression.operation) {
@@ -125,4 +125,12 @@ function parseCellName(cellName) {
     rowIndex: rowIndex,
     cellIndex: cellIndex
   };
+};
+
+function coerceCellValue(value) {
+  if (Number.isInteger(value)) {
+    return value;
+  }
+
+  return 0;
 }
