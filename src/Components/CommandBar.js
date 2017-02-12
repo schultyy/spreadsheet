@@ -7,6 +7,7 @@ export default class CommandBar extends React.Component {
 
     if (eventArgs.keyCode === 13) { //return
       onCommandChange(this.refs.commandText.value);
+      this.refs.commandText.value = '';
     }
   }
   render() {
