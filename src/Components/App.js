@@ -127,6 +127,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="header">
+          <h1>Spreadsheets</h1>
           <Options />
           <CommandBar
             onCommandChange={this.onCommandChange.bind(this)}
