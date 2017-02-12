@@ -40,6 +40,26 @@ describe('parseCommand', () => {
         });
       });
     });
+
+    context('with an empty value', () => {
+      const ast = parseCommand('A0 = ');
+
+      describe('ast', () => {
+        it('has type assignment', () => {
+          expect(ast.type).toEqual('assignment');
+        });
+
+        describe('expression', () => {
+          it('has type "string"', () => {
+            expect(ast.expression.type).toEqual('string');
+          });
+
+          it('has has empty string as value', () => {
+            expect(ast.expression.value).toEqual('');
+          });
+        });
+      });
+    });
   });
 
   describe('equation assignment with whitespace separated', () => {

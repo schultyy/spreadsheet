@@ -52,7 +52,10 @@ function equation(operatorIndex, expression) {
 }
 
 function castValue(value) {
-  if(isNumber(value)) {
+  if (value === '') {
+    return value.toString();
+  }
+  if (isNumber(value)) {
     return parseInt(value, 10);
   }
   return value.toString();
@@ -63,7 +66,7 @@ function isValue(potentialValue) {
 }
 
 function isNumber(potentialNumber) {
-  return !isNaN(potentialNumber);
+  return potentialNumber !== '' && !isNaN(potentialNumber);
 }
 
 function assertRequiredValue(stringToTest, expected) {
