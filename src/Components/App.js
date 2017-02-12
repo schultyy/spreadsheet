@@ -3,48 +3,23 @@ import Cell from './Cell';
 import Row from './Row';
 import CommandBar from './CommandBar';
 import Options from './Options';
-import { Row as RowModel,
-  Cell as CellModel
-} from '../lib/models';
 import { SpreadSheet } from '../lib/SpreadSheet';
 import './App.css';
-
-const MATRIX_SIZE = 10;
-
-function nextChar(c, offset) {
-  return String.fromCharCode(c.charCodeAt(0) + offset);
-}
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      spreadsheet: this.initializeModel(),
+      spreadsheet: SpreadSheet.initializeModel(),
       commandError: null,
       isFormulaCommandBarVisible: false
     };
   }
 
-  initializeModel() {
-    const rows = [];
-    let rowIndex = "A";
-
-    for(let j = 0; j < MATRIX_SIZE; j++) {
-      let cells = [];
-      const currentRowIndex = nextChar(rowIndex, j);
-
-      for(let i = 0; i < MATRIX_SIZE; i++) {
-        cells.push(new CellModel(i, currentRowIndex, 0));
-      }
-      rows.push(new RowModel(currentRowIndex, cells));
-    }
-    return new SpreadSheet(rows);
-  }
-
   renderHeaderRow() {
     let cells = [];
-    for(let i = 0; i < MATRIX_SIZE; i++) {
+    for(let i = 0; i < SpreadSheet.MATRIX_SIZE; i++) {
       cells.push((
         <Cell
           key={`header-${i}`}

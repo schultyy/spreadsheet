@@ -1,9 +1,34 @@
 import { parseCommand } from './commandParser';
-import { ComputedCell } from './models';
+import {
+  Row,
+  Cell,
+  ComputedCell
+} from '../lib/models';
 
 export function SpreadSheet(rows) {
   this.rows = rows;
   this.filename = 'new Spreadsheet';
+}
+
+function nextChar(c, offset) {
+  return String.fromCharCode(c.charCodeAt(0) + offset);
+}
+
+SpreadSheet.MATRIX_SIZE = 10;
+SpreadSheet.initializeModel = function() {
+  const rows = [];
+  let rowIndex = "A";
+
+  for(let j = 0; j < SpreadSheet.MATRIX_SIZE; j++) {
+    let cells = [];
+    const currentRowIndex = nextChar(rowIndex, j);
+
+    for(let i = 0; i < SpreadSheet.MATRIX_SIZE; i++) {
+      cells.push(new Cell(i, currentRowIndex, 0));
+    }
+    rows.push(new Row(currentRowIndex, cells));
+  }
+  return new SpreadSheet(rows);
 }
 
 SpreadSheet.prototype.clone = function() {
