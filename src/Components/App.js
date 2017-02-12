@@ -134,7 +134,7 @@ class App extends Component {
       <div className="App">
         <div className="header">
           <h1>Spreadsheets</h1>
-          <Options onFilenameChange={this.onSpreadSheetNameChange.bind(this)} />
+          <Options filename={spreadsheet.filename} onFilenameChange={this.onSpreadSheetNameChange.bind(this)} />
           <CommandBar
             onCommandChange={this.onCommandChange.bind(this)}
             commandError={commandError}
