@@ -31,7 +31,6 @@ function nextChar(c, offset) {
   return String.fromCharCode(c.charCodeAt(0) + offset);
 }
 
-
 SpreadSheet.prototype.clone = function() {
   const newSheet = new SpreadSheet(this.rows.map(r => r.clone()));
   newSheet.filename = this.filename;

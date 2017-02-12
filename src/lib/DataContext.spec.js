@@ -3,16 +3,14 @@ import DataContext from './DataContext';
 import fs from 'fs-extra';
 import { SpreadSheet } from './SpreadSheet';
 
-const DBName = 'testsheet';
-
 afterAll(() => {
   //Clean up PouchDB test database
-  fs.removeSync(DBName);
+  fs.removeSync(DataContext.DBNAME);
 });
 
 describe('DataContext', () => {
   const spreadsheet = new SpreadSheet();
-  spreadsheet.setFilename(DBName);
+  spreadsheet.setFilename('new sheet');
 
   const context = new DataContext(spreadsheet);
   describe('.new', () => {
@@ -24,8 +22,8 @@ describe('DataContext', () => {
       expect(context.spreadsheet).toEqual(spreadsheet);
     });
 
-    it("creates a database with the spreadsheet's name", () => {
-      expect(context.pouch.name).toEqual(DBName);
+    it("creates a database with the predefined Name", () => {
+      expect(context.pouch.name).toEqual(DataContext.DBNAME);
     });
   });
 
