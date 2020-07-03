@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "fs-extra": "^2.0.0",
+    "fs-extra": "^9.0.1",
     "react-scripts": "0.8.5"
   },
   "dependencies": {
-    "pouchdb": "^6.1.2",
+    "pouchdb": "^7.2.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
