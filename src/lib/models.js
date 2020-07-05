@@ -14,35 +14,40 @@ export class Cell {
   }
 }
 
-export function ComputedCell(index, rowIndex, formula) {
-  this.index = index;
-  this.rowIndex = rowIndex;
-  this.value = 0;
-  this.formula = formula;
+export class ComputedCell {
+  constructor(index, rowIndex, formula) {
+    this.index = index;
+    this.rowIndex = rowIndex;
+    this.value = 0;
+    this.formula = formula;
+  }
+
+  clone() {
+    return new ComputedCell(this.index, this.rowIndex, this.formula);
+  }
 }
 
-ComputedCell.prototype.clone = function() {
-  return new ComputedCell(this.index, this.rowIndex, this.formula);
-};
+export class Row {
+  constructor(index, cells) {
+    this.index = index;
+    this.cells = cells;
+  }
 
-export function Row(index, cells) {
-  this.index = index;
-  this.cells = cells;
-}
+  clone() {
+    return new Row(this.index, this.cells.map(c => c.clone()));
+  }
 
-Row.prototype.clone = function() {
-  return new Row(this.index, this.cells.map(c => c.clone()));
-};
+  findCell(cellIndex) {
+    return this.cells.find(cell => cell.index === cellIndex);
+  }
 
-Row.prototype.findCell = function(cellIndex) {
-  return this.cells.find(cell => cell.index === cellIndex);
-};
-
-Row.prototype.replaceCell = function(cellIndex, newCell) {
-  for(let i = 0; i < this.cells.length; i++) {
-    if(this.cells[i].index === cellIndex) {
-      this.cells[i] = newCell;
-      break;
+  replaceCell(cellIndex, newCell) {
+    for(let i = 0; i < this.cells.length; i++) {
+      if(this.cells[i].index === cellIndex) {
+        this.cells[i] = newCell;
+        break;
+      }
     }
   }
-};
+}
+
