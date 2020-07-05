@@ -1,6 +1,5 @@
 import React from 'react';
 import './Cell.css';
-import ContextMenu from './ContextMenu';
 
 export default class Cell extends React.Component {
   renderReadOnlyCaption() {
@@ -10,18 +9,18 @@ export default class Cell extends React.Component {
     );
   }
 
-  renderInputField(onValueChange, onAddFormula, hasFormula, value) {
-    return (<CellContent onAddFormula={onAddFormula} onValueChange={onValueChange} hasFormula={hasFormula} value={value}></CellContent>);
+  renderInputField(onValueChange, hasFormula, value) {
+    return (<CellContent onValueChange={onValueChange} hasFormula={hasFormula} value={value}></CellContent>);
   }
 
   render() {
-    const { isReadOnly, onValueChange, onAddFormula, hasFormula, value } = this.props;
+    const { isReadOnly, onValueChange, hasFormula, value } = this.props;
 
     const cellClasses = isReadOnly ? "cell" : "cell";
 
     return (
       <div className={cellClasses}>
-        {isReadOnly ? this.renderReadOnlyCaption() : this.renderInputField(onValueChange, onAddFormula, hasFormula, value)}
+        {isReadOnly ? this.renderReadOnlyCaption() : this.renderInputField(onValueChange, hasFormula, value)}
       </div>
     );
   }
@@ -32,8 +31,7 @@ class CellContent extends React.Component {
     super();
 
     this.state = {
-      isActive: false,
-      hasFocus: false
+      isActive: false
     };
   }
 
@@ -46,12 +44,12 @@ class CellContent extends React.Component {
 
   onInputKeyDown(event) {
     if(event.keyCode === 13) {
-      this.setState({ isActive: false, hasFocus: false });
+      this.setState({ isActive: false });
     }
   }
 
   onInputBlur(event) {
-    this.setState({ isActive: false, hasFocus: false });
+    this.setState({ isActive: false });
   }
 
   renderInputField(value) {
@@ -66,26 +64,18 @@ class CellContent extends React.Component {
     );
   }
 
-  onGainFocus() {
-    this.setState({
-      hasFocus: true
-    });
-    this.onMouseClick();
-  }
-
   render() {
-    const { value, onAddFormula, hasFormula } = this.props;
-    const { isActive, hasFocus } = this.state;
+    const { value, hasFormula } = this.props;
+    const { isActive } = this.state;
 
     const classNames = hasFormula ? "readonly" : "";
 
     return (
-      <div className={classNames} onClick={this.onGainFocus.bind(this)}>
+      <div className={classNames}>
         { isActive ?
           this.renderInputField(value) :
           <span className="content">{value}</span>
         }
-        { hasFocus && !hasFormula ? <ContextMenu onAddFormula={onAddFormula}></ContextMenu> : null }
       </div>
     );
   }

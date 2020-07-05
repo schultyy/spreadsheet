@@ -12,8 +12,7 @@ class App extends Component {
 
     this.state = {
       spreadsheet: new SpreadSheet(),
-      commandError: null,
-      isFormulaCommandBarVisible: false
+      commandError: null
     };
   }
 
@@ -56,22 +55,6 @@ class App extends Component {
     }
   }
 
-  onAddFormula() {
-    this.setState({
-      isFormulaCommandBarVisible: true
-    });
-  }
-
-  onModalAddFormulaFinish(formula) {
-    const { spreadsheet } = this.state;
-
-    spreadsheet.addFormulaToCell(formula);
-
-    this.setState({
-      isFormulaCommandBarVisible: false
-    });
-  }
-
   onSpreadSheetNameChange(newName) {
     const spreadSheet = this.state.spreadsheet.clone();
     spreadSheet.setFilename(newName);
@@ -79,25 +62,14 @@ class App extends Component {
   }
 
   render() {
-    const { spreadsheet, commandError, isFormulaCommandBarVisible } = this.state;
+    const { spreadsheet, commandError } = this.state;
     const self = this;
 
     let rows = [this.renderHeaderRow()].concat(spreadsheet.rows.map(function(row, rowIndex) {
       let cells = row.cells.map(function(cell, cellIndex) {
-        const hasFormula = !!cell.formula;
-        if(hasFormula) {
-          return (
-            <Cell onValueChange={self.onCellValueChange.bind(self, cell)}
-                value={cell.value}
-                hasFormula={true}
-                key={cellIndex}>
-            </Cell>
-          );
-        }
         return (
           <Cell onValueChange={self.onCellValueChange.bind(self, cell)}
                 value={cell.value}
-                onAddFormula={self.onAddFormula.bind(self)}
                 key={cellIndex}>
           </Cell>
         );
@@ -117,11 +89,6 @@ class App extends Component {
           />
         </div>
         <div className="spreadsheet">
-          { isFormulaCommandBarVisible ?
-            <CommandBar
-              onCommandChange={this.onModalAddFormulaFinish.bind(this)}
-              modal={true}
-            /> : null }
           {rows}
         </div>
       </div>
