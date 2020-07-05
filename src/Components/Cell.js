@@ -37,7 +37,7 @@ class CellContent extends React.Component {
     };
   }
 
-  onMouseDoubleClick(event) {
+  onMouseClick() {
     const { hasFormula } = this.props;
     if(!hasFormula) {
       this.setState({ isActive: true });
@@ -70,6 +70,7 @@ class CellContent extends React.Component {
     this.setState({
       hasFocus: true
     });
+    this.onMouseClick();
   }
 
   render() {
@@ -79,7 +80,7 @@ class CellContent extends React.Component {
     const classNames = hasFormula ? "readonly" : "";
 
     return (
-      <div className={classNames} onClick={this.onGainFocus.bind(this)} onDoubleClick={this.onMouseDoubleClick.bind(this)}>
+      <div className={classNames} onClick={this.onGainFocus.bind(this)}>
         { isActive ?
           this.renderInputField(value) :
           <span className="content">{value}</span>
