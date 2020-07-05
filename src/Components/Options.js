@@ -38,6 +38,7 @@ export default class Options extends React.Component {
 
     return (
       <div className="spreadsheet-options">
+        <h1>Give you spreadsheet a name</h1>
         <input
               ref='spreadSheetNameInput'
               type="text"
