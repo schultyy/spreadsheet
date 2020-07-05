@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@500&display=swap');
+
 .App {
   display: flex;
   flex-direction: column;
@@ -8,7 +10,29 @@
   margin-bottom: 15px;
 }
 
-.App .header h1 {
+.App .header > h1 {
   font-size: 25px;
   margin-left: 15px;
+  background: #118AB2;
+  color: white;
+  font-family: 'IBM Plex Sans', sans-serif;
+  display: inline-block;
+  padding: 10px;
+}
+
+.App .spreadsheet {
+  opacity: 1;
+  animation: visibility 1s;
+}
+
+@keyframes visibility {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }

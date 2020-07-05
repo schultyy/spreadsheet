@@ -1,7 +1,13 @@
 .spreadsheet-options {
   display: flex;
+  flex-direction: row;
   justify-content: flex-start;
+  align-items: baseline;
   margin: 0px;
+}
+
+.spreadsheet-options h1 {
+  font-size: 20px;
 }
 
 .spreadsheet-options input {
