@@ -1,16 +1,18 @@
-export function Cell(index, rowIndex, value) {
-  this.index = index;
-  this.rowIndex = rowIndex;
-  this.value = value;
+export class Cell {
+  constructor(index, rowIndex, value) {
+    this.index = index;
+    this.rowIndex = rowIndex;
+    this.value = value;
+  }
+
+  id() {
+    return `${this.rowIndex}${this.index}`;
+  }
+
+  clone() {
+    return new Cell(this.index, this.rowIndex, this.value);
+  }
 }
-
-Cell.prototype.id = function() {
-  return `${this.rowIndex}${this.index}`;
-};
-
-Cell.prototype.clone = function() {
-  return new Cell(this.index, this.rowIndex, this.value);
-};
 
 export function ComputedCell(index, rowIndex, formula) {
   this.index = index;
