@@ -18,7 +18,7 @@ class App extends Component {
 
   renderHeaderRow() {
     let cells = [];
-    for(let i = 0; i < SpreadSheet.MATRIX_SIZE; i++) {
+    for(let i = 0; i < SpreadSheet.matrix_size; i++) {
       cells.push((
         <Cell
           key={`header-${i}`}
