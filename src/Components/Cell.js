@@ -71,7 +71,7 @@ class CellContent extends React.Component {
     const classNames = hasFormula ? "readonly" : "";
 
     return (
-      <div className={classNames}>
+      <div className={classNames} onClick={this.onMouseClick.bind(this)}>
         { isActive ?
           this.renderInputField(value) :
           <span className="content">{value}</span>
