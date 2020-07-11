@@ -37,7 +37,3 @@ export default class Row extends React.Component {
     );
   }
 }
-
-Row.propTypes = {
-  cells: React.PropTypes.array.isRequired
-};
