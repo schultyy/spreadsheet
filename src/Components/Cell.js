@@ -11,10 +11,14 @@ export default class Cell extends React.Component {
     };
   }
 
-  onValueChange(event) {
+  onCellValueChange(event) {
+    const { onValueChange } = this.props;
+
     this.setState({
       currentValue: event.target.value
     });
+
+    onValueChange(event.target.value);
   }
 
   renderReadOnlyCaption() {
@@ -30,7 +34,7 @@ export default class Cell extends React.Component {
 
     return (
       <div className="cell">
-        { isReadOnly ? this.renderReadOnlyCaption() : <CellInput currentValue={currentValue} onValueChange={this.onValueChange.bind(this)} /> }
+        { isReadOnly ? this.renderReadOnlyCaption() : <CellInput currentValue={currentValue} onValueChange={this.onCellValueChange.bind(this)} /> }
       </div>
     );
   }

@@ -33,9 +33,9 @@ class App extends Component {
     );
   }
 
-  onCellValueChange(changedCell, eventArgs) {
+  onCellValueChange(changedCell, newValue) {
     let newSpreadSheet = this.state.spreadsheet.clone();
-    newSpreadSheet.eval(`${changedCell.id()} = ${eventArgs.target.value}`);
+    newSpreadSheet.eval(`${changedCell.id()} = ${newValue}`);
     this.setState({spreadsheet: newSpreadSheet});
   }
 
