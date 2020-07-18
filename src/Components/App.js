@@ -11,7 +11,6 @@ class App extends Component {
     super();
 
     this.state = {
-      spreadsheet: new SpreadSheet(),
       commandError: null
     };
   }
@@ -34,9 +33,9 @@ class App extends Component {
   }
 
   onCellValueChange(changedCell, newValue) {
-    let newSpreadSheet = this.state.spreadsheet.clone();
-    newSpreadSheet.eval(`${changedCell.id()} = ${newValue}`);
-    this.setState({spreadsheet: newSpreadSheet});
+    const { spreadsheet, valueChange } = this.props;
+    console.log("CELL VALUE CHANGE", newValue);
+    valueChange(spreadsheet, changedCell, newValue);
   }
 
   onCommandChange(newCommand) {
@@ -62,7 +61,8 @@ class App extends Component {
   }
 
   render() {
-    const { spreadsheet, commandError } = this.state;
+    const { commandError } = this.state;
+    const { spreadsheet } = this.props;
     const self = this;
 
     let rows = [this.renderHeaderRow()].concat(spreadsheet.rows.map(function(row, rowIndex) {
