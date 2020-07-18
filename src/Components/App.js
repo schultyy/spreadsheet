@@ -33,9 +33,8 @@ class App extends Component {
   }
 
   onCellValueChange(changedCell, newValue) {
-    const { spreadsheet, valueChange } = this.props;
-    console.log("CELL VALUE CHANGE", newValue);
-    valueChange(spreadsheet, changedCell, newValue);
+    const { valueChange } = this.props;
+    valueChange(changedCell, newValue);
   }
 
   onCommandChange(newCommand) {
@@ -55,9 +54,8 @@ class App extends Component {
   }
 
   onSpreadSheetNameChange(newName) {
-    const spreadSheet = this.state.spreadsheet.clone();
-    spreadSheet.setFilename(newName);
-    this.setState({ spreadsheet: spreadSheet });
+    const { changeName } = this.props;
+    changeName(newName);
   }
 
   render() {

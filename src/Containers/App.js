@@ -1,13 +1,17 @@
 import { connect } from 'react-redux';
 import App from '../Components/App';
-import { spreadsheetCellChange } from '../Actions';
+import {
+  spreadsheetCellChange,
+  spreadsheetNameChange
+} from '../Actions';
 
 const mapStateToProps = state => ({
   spreadsheet: state.spreadsheet.spreadsheet
 });
 
 const mapDispatchToProps = dispatch => ({
-  valueChange: (spreadsheet, changedCell, newValue) => dispatch(spreadsheetCellChange(spreadsheet, changedCell, newValue))
+  valueChange: (changedCell, newValue) => dispatch(spreadsheetCellChange(changedCell, newValue)),
+  changeName: (newName) => dispatch(spreadsheetNameChange(newName))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
